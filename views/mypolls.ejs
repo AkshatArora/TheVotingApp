@@ -4,7 +4,7 @@
 
 	<head>
 		<title>Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.</title>
-		
+     	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
 	</head>
 
@@ -12,21 +12,36 @@
 		<p>Welcome, <span id="display-name"></span>!</p>
 		<a class="menu" href="/profile">Profile</a>
 		<p>|</p>
+		<a class="menu" href="/mypolls">My Polls</a>
+		<p>|</p>
+		<a class="menu" href="/newpoll">New Poll</a>
+		<p>|</p>		
 		<a class="menu" href="/logout">Logout</a>
 	</header>
 
 	<body>
+	
 		<div class="container">
 			<img src="/public/img/clementine_150.png" />
 			<br />
-			<p class="clementine-text">Clementine.js</p>
+			<p class="clementine-text">The Voting App</p>
 		</div>
 	
 		<div class="container">
-			<p>You have clicked the button <span id="click-nbr"></span> times.</p>
+		    <p>Below are polls you own.</p>
+			<p>Select a poll to see the results and vote,<a href="/newpoll"> or make a new poll.</a></p>
+			
 			<br />
+			<div class = "btn-container" style = "margin:30px; background-color:grey;">
+				<ol>
+					 <% for (var i=0;i<data.length;i++) { %>
+ 					<li style = "margin:10px 2px 10px 2px; background-color:white;"><%= data[i].pollClicks.title%></li>
+ <% }%>
+				
+				</ol>
+			</div>
 			<div class="btn-container">
-				<button type="submit" class="btn btn-add">CLICK ME!</button>
+				<button type="submit" class="btn btn-add" >CLICK ME!</button>
 				<button class="btn btn-delete">RESET</button>
 			</div>
 		</div>

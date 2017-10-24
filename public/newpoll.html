@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.</title>
+				<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+<script type="text/javascript" src="common/ajax-functions.js"></script>
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<header>
+		<p>Welcome, <span id="display-name"></span>!</p>
+		<a class="menu" href="/profile">Profile</a>
+		<p>|</p>
+		<a class="menu" href="/mypolls">My Polls</a>
+		<p>|</p>
+		<a class="menu" href="/newpoll">New Poll</a>
+		<p>|</p>		
+		<a class="menu" href="/logout">Logout</a>
+	</header>
+
+	<body>
+
+		<div class="container">
+			<img src="/public/img/clementine_150.png" />
+			<br />
+			<p class="clementine-text"style="margin:30px 0px 20px 0px;">The Voting App</p>
+		</div>
+	
+		<div class="container">
+<p style = "font-size:30px ;margin-top:20px">MAKE A NEW POLL!</p>
+			
+			<br />
+		
+			<div class="container">  
+  <form id="contact" action="/newpoll" method="post">
+    <h3>NEW POLL</h3>
+
+    <fieldset>
+      <input placeholder="Title" id ="poll_title" type="text" name ="title" tabindex="1" required autofocus>
+    </fieldset>
+    <fieldset>
+    	<textarea id = "poll_options" name = "options" cols="50" rows="10" placeholder="Options(separated by line)"required></textarea>
+
+    </fieldset>
+   <button type ="submit" onclick="texttransfer()">MAKE</button>
+   
+  </form>
+</div>
+		</div>
+			<script>  
+			  var socket = io();/*global io*/
+			 
+			  var displayname;
+    function texttransfer(){
+    	var apiUrl = appUrl + '/api/:id';
+			ajaxFunctions.ready(ajaxFunctions.ajaxRequest('GET', apiUrl, function (data) {
+      var userObject = JSON.parse(data);
+var name = userObject.displayName;
+
+	
+    	var title = document.getElementById('poll_title').value
+    	var options = document.getElementById('poll_options').value
+    	var dat={username:userObject.username,name:name,id:userObject.id,publicRepos:userObject.publicRepos,tit:title,opt:options}
+  socket.emit('join',dat);
+ 
+   }));
+	
+  
+    	
+    	var title = document.getElementById('poll_title').value
+    	var options = document.getElementById('poll_options').value
+    	//var dat = {name:displayname,tit:title,opt:options}
+   
+       // socket.emit('join',dat );
+   }
+</script>
+		
+		<script type="text/javascript" src="controllers/clickController.client.js"></script>
+		<script type="text/javascript" src="controllers/userController.client.js"></script>
+
+	</body>
+
+</html>

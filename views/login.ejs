@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.</title>
+		
+		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body>
+		<div class="container">	
+			<div class="login">
+				<img src="/public/img/clementine_150.png" />
+				<br />
+				<p class="clementine-text">Clementine.js</p>
+				<a href="/auth/github">
+					<div class="btn" id="login-btn">
+						<img src="/public/img/github_32px.png" alt="github logo" />
+						<p>LOGIN WITH GITHUB</p>
+					</div></a></div>
+					
+						</div>
+		<div class="container">
+			<p>Select a poll to see the results and vote, or sign-in to make a new poll.</p>
+			
+			<br />
+			<div class = "btn-container" style = "margin:30px; background-color:grey;">
+				<ol>
+					 <% for (var i=0;i<data.length;i++) { %>
+ 					<li style = "margin:10px 12px 10px 2px; background-color:white;"><%= data[i].pollClicks.title%></li>
+ <% }%>
+				
+				</ol>
+			</div>
+			<div class="btn-container">
+				<button type="submit" class="btn btn-add">CLICK ME!</button>
+				<button class="btn btn-delete">RESET</button>
+			</div>
+		</div>
+				
+	
+	</body>
+
+</html>

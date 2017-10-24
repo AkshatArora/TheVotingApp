@@ -10,8 +10,10 @@ var User = new Schema({
 		username: String,
       publicRepos: Number
 	},
-   nbrClicks: {
-      clicks: Number
+   pollClicks: {
+      clicks: Number,
+      title: String,
+      options : String
    }
 });
 
