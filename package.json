@@ -5,10 +5,10 @@
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AkshatArora/clementinejs-fcc"
+    "url": "git+https://github.com/AkshatArora/TheVotingApp"
   },
   "homepage": "http://www.clementinejs.com/",
-  "bugs": "https://github.com/AkshatArora/clementinejs-fcc/issues"
+  "bugs": "https://github.com/AkshatArora/TheVotingApp/issues"
   "keywords": [
     "MongoDB",
     "Mongoose",
