@@ -1,13 +1,13 @@
 {
-  "name": "clementinejs-fcc",
+  "name": "TheVotingApp",
   "version": "1.0.1",
-  "description": "The elegant and lightweight boilerplate for full stack JavaScript.",
+  "description": "Make your own poll at the Voting App.",
   "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AkshatArora/TheVotingApp"
   },
-  "homepage": "http://www.clementinejs.com/",
+  "homepage": "http://www.glitch.com/",
   "bugs": "https://github.com/AkshatArora/TheVotingApp/issues"
   "keywords": [
     "MongoDB",
