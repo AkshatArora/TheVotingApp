@@ -2,18 +2,45 @@
 <html>
   <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-   
+    <link href="/public/css/style.css" rel="stylesheet" type="text/css">
+   <div style="margin:80px 0px 0px 200px;font-size:60px" ><%= data[0].title %></div>
   </head>
   <body>
-    <div style="margin:150px 0px -10px 200px;font-size:20px" ><%= data[0].title %></div>
-    <div id = "option" style="margin:150px 0px 0px 0px;font-size:20px;visibility:hidden;"><%= data[0].options %></div>
+         <div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn" style="margin-left:700px;">Vote Here</button>
+  <div id="myDropdown" style="margin-left:700px;" class="dropdown-content">
+
+    <a href="#">Add your own option..</a>
+  </div>
+</div>
+        <div id = "option" style="visibility:hidden;"><%= data[0].options %></div>
     <div id="donutchart" style="width: 900px; height: 500px;">
-      <div id="test"></div>
+  
     </div>
      <script type="text/javascript">
  
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
+  
+  function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
   
       function drawChart() {
              var opt = document.getElementById('option')
@@ -22,12 +49,23 @@
       dataarr.push(['Options', 'Votes']);
    
      var arr = op.split('\n')
+     
+     
+     
    var b = [];
    var i;
     for ( i =0;i<Object.keys(arr).length;i++)
     b.push(1)
    for ( i =0;i<Object.keys(arr).length;i++)
    { dataarr.push([arr[i],b[i]])
+   var drop = document.getElementById('myDropdown')
+   
+   var a = document.createElement('a');
+var linkText = document.createTextNode(arr[i]);
+a.appendChild(linkText);
+a.title = "votes:"+b[i];
+a.href = "#";
+drop.appendChild(a);
 }
 var data = google.visualization.arrayToDataTable(dataarr);
 
