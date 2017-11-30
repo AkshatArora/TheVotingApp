@@ -33,18 +33,46 @@
 			<br />
 			<div class = "btn-container" style = "margin:30px; background-color:grey;">
 				<ol>
-					 <% for (var i=0;i<data.length;i++) { %>
- 					<li style = "margin:10px 2px 10px 2px; background-color:white;"><%= data[i].pollClicks.title%></li>
- <% }%>
+					 
 					
+					 
+					
+ 				  
+    <% for (var i=0;i<data.length;i++) { %>
+ 	<li style = "margin:10px 2px 10px 2px; background-color:white;"><%= data[i].pollClicks.title%></li>
+ 
+ <form id="contact" action="/seepoll" method="post">
+    <fieldset>
+      <input  value = "<%= data[i].pollClicks.title%>" style = "visibility:hidden;" placeholder="Title" id ="poll_title" type="text" name ="title" tabindex="1" required autofocus>
+    </fieldset>
+        <fieldset>
+      <pre  value = "<%= data[i].pollClicks.options%>" style = "visibility:hidden;" placeholder="Title" id ="poll_title" type="text" name ="options" tabindex="1" required autofocus></pre>
+    </fieldset>
+           <fieldset>
+      <input  value = "[<%= data[i].pollClicks.count%>]" style = "visibility:hidden;" placeholder="Title" id ="poll_title" type="text" name ="count" tabindex="1" required autofocus>
+    </fieldset>
+            <fieldset>
+      <input  value = "<%= data[i]._id%>" style = "visibility:hidden;" placeholder="Title" id ="poll_title" type="text" name ="id" tabindex="1" required autofocus>
+    </fieldset>
+  
+   <button type ="submit">SEE THE POLL</button>
+   <br>
+		
+</form>
+<% }%>	
+ 
+ 		
 				</ol>
 			</div>
-			<div class="btn-container">
-				<button type="submit" class="btn btn-add">CLICK ME!</button>
-				<button class="btn btn-delete">RESET</button>
-			</div>
+		
 		</div>
-	
+		<script>
+			function linkpressed(data){
+				var title = data.title;
+				var options = data.options;
+				
+			}
+		</script>
 		<script type="text/javascript" src="controllers/clickController.client.js"></script>
 		<script type="text/javascript" src="controllers/userController.client.js"></script>
 	</body>
