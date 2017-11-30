@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>The Voting App</title>
+      <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <link href="/public/css/style.css" rel="stylesheet" type="text/css">
    <div style="margin:80px 0px 0px 200px;font-size:60px" ><%= data[0].title %></div>
@@ -15,14 +16,18 @@
   </div>
 </div>
         <div id = "option" style="visibility:hidden;"><%= data[0].options %></div>
-    <div id="donutchart" style="width: 900px; height: 500px;">
+         <div id = "count" style="visibility:hidden;"><%= data[0].count %></div>
+         <div id = "id" style="visibility:hidden;"><%= data[0].id %></div>
+         
+    <div id="donutchart" class ="donutchart" style="width: 900px; height: 500px;">
   
     </div>
      <script type="text/javascript">
  
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
-  
+     google.charts.setOnLoadCallback(drawgraph); 
+  var c =true;
   function myFunction() {
     document.getElementById("myDropdown").classList.toggle("show");
 }
@@ -41,22 +46,29 @@ window.onclick = function(event) {
     }
   }
 }
-
+var b ;
+  var dataarr = [];
+  console.log("first time")
   
       function drawChart() {
              var opt = document.getElementById('option')
     var op = String(opt.innerHTML);
-      var dataarr = [];
+    
       dataarr.push(['Options', 'Votes']);
    
      var arr = op.split('\n')
      
      
-     
-   var b = [];
+     var b1 =[]
+   
    var i;
-    for ( i =0;i<Object.keys(arr).length;i++)
-    b.push(1)
+   b1=count.innerHTML;
+   
+
+ b = b1.split(',').map(function(item) {
+    return parseInt(item, 10);
+});
+   console.log(b);
    for ( i =0;i<Object.keys(arr).length;i++)
    { dataarr.push([arr[i],b[i]])
    var drop = document.getElementById('myDropdown')
@@ -65,9 +77,102 @@ window.onclick = function(event) {
 var linkText = document.createTextNode(arr[i]);
 a.appendChild(linkText);
 a.title = "votes:"+b[i];
+a.id = i;
+console.log("THe Votes are allocating");
+
+
+/*
+a.onclick = function() {
+ 
+   console.log(dataarr);
+   var votes = (a.title).slice(-1);
+   votes = Number(votes)+1;
+   a.title = "votes:"+votes;
+   console.log("CLicked tag "+ a.id);
+   
+};*/
+
 a.href = "#";
 drop.appendChild(a);
 }
+
+}
+
+
+      function drawChart2() {
+             var opt = document.getElementById('option')
+    var op = String(opt.innerHTML);
+      dataarr=[];
+      dataarr.push(['Options', 'Votes']);
+   
+     var arr = op.split('\n')
+     
+    console.log(b)
+
+   for ( i =0;i<Object.keys(arr).length;i++)
+   { dataarr.push([arr[i],b[i]])
+   var drop = document.getElementById('myDropdown')
+   
+   var a = document.createElement('a');
+var linkText = document.createTextNode(arr[i]);
+a.appendChild(linkText);
+a.title = "votes:"+b[i];
+a.id = i;
+console.log("THe Votes are allocating");
+
+
+/*
+a.onclick = function() {
+ 
+   console.log(dataarr);
+   var votes = (a.title).slice(-1);
+   votes = Number(votes)+1;
+   a.title = "votes:"+votes;
+   console.log("CLicked tag "+ a.id);
+   
+};*/
+
+a.href = "#";
+
+}
+
+}
+
+$(".dropdown-content").click(function(e){
+    
+     if(c==true){
+    var ele = e.target;
+    var votes = (ele.title).slice(-1);
+   votes = Number(votes)+1;
+   b[ele.id] = votes;
+   ele.title = "votes:"+votes;
+   console.log("CLicked tag "+ ele.id); 
+  c=false;
+  var socket = io();
+  	var dat={id:String(document.getElementById('id').innerHTML),count:b};
+    	console.log(dat)
+  socket.emit('update',dat);
+  
+   google.charts.setOnLoadCallback(drawChart2);
+    google.charts.setOnLoadCallback(drawgraph);
+         
+         
+     }
+   
+});
+
+
+  /*
+   var votes = (arr[i].title).slice(-1);
+   votes = Number(votes)+1;
+   arr[i].title = "votes:"+votes;
+   console.log("CLicked tag "+ arr[i].id);  */
+    // put your click handling code here
+    // return(false) if you don't want default click behavior for the link
+
+
+function drawgraph(){
+    console.log(dataarr)
 var data = google.visualization.arrayToDataTable(dataarr);
 
         var options = {
@@ -77,6 +182,7 @@ var data = google.visualization.arrayToDataTable(dataarr);
 
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
         chart.draw(data, options);
+        console.log("chart drawn");
       }
     </script>
   </body>
