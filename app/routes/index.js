@@ -30,11 +30,12 @@ module.exports = function (app, passport) {
 
 	app.route('/login')
 		.get(function (req, res) {
-				User.find({},'pollClicks',function(err,data){
+				User.find({},function(err,data){
 				if(err)
 				throw err;
+				console.log(data)
 			res.render('login.ejs',{data:data});
-			//	console.log(data);
+			
 
 	})	});
 
@@ -64,10 +65,44 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/newpoll.html');
 		});
+	
+		app.post('/seepoll',urlencodedParser,function (req, res) {
+			console.log(req.body)
+			var data = (req.body);
+			var count = JSON.parse(req.body.count);
+			console.log(count);
+	       	console.log(typeof(data));
+	       	var options;
+	       	User.find({_id:data.id},'pollClicks',function(err,dat){
+				if(err)
+				throw err;
+				console.log(dat)
+			options=dat[0].pollClicks.options;
+			console.log(options)
+			var dat =[{title:data.title,options:options,count:count,id:data.id}]
+			console.log(dat)
+			res.render('poll_gen.ejs',{data:dat});
+			})
+	       
+
+			
+
+		});
+
 	app.post('/newpoll',urlencodedParser, function (req, res){
-		var data=[req.body];
+				var data=[req.body];
+				console.log(req.body)
+			var len = req.body.options.split('\n').length;
+		var count=[];
+		for(var i=0;i<len;i++)
+		{count.push(1);
+		}
+		
+		req.body['count']=count;
+
+	
 		res.render('poll_gen.ejs',{data:data});
-		console.log(data);
+		//console.log(data);
 		});
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {
