@@ -15,7 +15,7 @@
 				<br />
 				<p class="clementine-text">The Voting App</p>
 				<a href="/auth/github">
-					<div class="btn" id="login-btn" style="margin:50px;>
+					<div class="btn" id="login-btn" style="margin:50px;">
 						<img src="/public/img/github_32px.png" alt="github logo" />
 						<p>LOGIN WITH GITHUB</p>
 					</div></a></div>
@@ -26,17 +26,14 @@
 			
 			<br />
 			<div class = "btn-container" style = "margin:30px; background-color:grey;">
-				<ol>
+				<ul>
 					 <% for (var i=0;i<data.length;i++) { %>
  					<li style = "margin:10px 12px 10px 2px; background-color:white;"><%= data[i].pollClicks.title%></li>
  <% }%>
 				
-				</ol>
+				</ul>
 			</div>
-			<div class="btn-container">
-				<button type="submit" class="btn btn-add">CLICK ME!</button>
-				<button class="btn btn-delete">RESET</button>
-			</div>
+		
 		</div>
 				
 	
