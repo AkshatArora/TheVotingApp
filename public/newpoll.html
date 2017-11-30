@@ -3,7 +3,7 @@
 <html>
 
 	<head>
-		<title>Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.</title>
+		<title>New Poll</title>
 				<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 <script type="text/javascript" src="common/ajax-functions.js"></script>
 		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
@@ -41,10 +41,9 @@
       <input placeholder="Title" id ="poll_title" type="text" name ="title" tabindex="1" required autofocus>
     </fieldset>
     <fieldset>
-    	<textarea id = "poll_options" name = "options" cols="50" rows="10" placeholder="Options(separated by line)"required></textarea>
-
+    	<textarea id = "poll_options" type="text" name = "options" cols="50" rows="10" placeholder="Options(separated by linese)"required></textarea>
     </fieldset>
-   <button type ="submit" onclick="texttransfer()">MAKE</button>
+   <button onclick="texttransfer()">MAKE</button>
    
   </form>
 </div>
@@ -63,17 +62,12 @@ var name = userObject.displayName;
     	var title = document.getElementById('poll_title').value
     	var options = document.getElementById('poll_options').value
     	var dat={username:userObject.username,name:name,id:userObject.id,publicRepos:userObject.publicRepos,tit:title,opt:options}
+    	
   socket.emit('join',dat);
  
    }));
 	
-  
-    	
-    	var title = document.getElementById('poll_title').value
-    	var options = document.getElementById('poll_options').value
-    	//var dat = {name:displayname,tit:title,opt:options}
-   
-       // socket.emit('join',dat );
+ 
    }
 </script>
 		
