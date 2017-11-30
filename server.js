@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
 var app = express();
-app.set('view engine','ejs')
+app.set('view engine','ejs');
 var User = require(path +'/app/models/users.js');
 var serv = require('http').Server(app);
 var io = require('socket.io')(serv);
@@ -20,7 +20,7 @@ io.on('connection',function(socket){
 	 //   console.log("your github is:"+user_id);
 	})
 	socket.on('join',function(data){
-	
+	console.log("the data is:"+data.opt)
 var newUser =new User();
 			newUser.github.displayName = data.name;
 			newUser.github.id = data.id;
@@ -28,15 +28,44 @@ var newUser =new User();
       newUser.github.publicRepos= data.publicRepos;
 		newUser.pollClicks.title = data.tit;
 		newUser.pollClicks.options = data.opt;
-		newUser.pollClicks.clicks = 0;
-	//	console.log(newUser);
+		var len = data.opt.split('\n').length;
+		console.log("the length is:"+len)
+		var count=[];
+		for(var i=0;i<len;i++)
+		{count.push(1);
+		}
+		newUser.pollClicks.count=count;
+		console.log(newUser);
 		newUser.save(function(err){
 			if(err)
 				throw err;
 		});
 
 	});
-		});
+	
+	socket.on('update',function(data){
+	
+User.findById(data.id, function(err, p) {
+  if (!p)
+    console.log('Could not load Document');
+  else {
+    // do your updates here
+    p.pollClicks.count= data.count;
+
+    p.save(function(err) {
+      if (err)
+        console.log('error')
+      else
+        console.log('success')
+    });
+  }
+});
+
+			
+
+
+	
+		});})
 
 require('dotenv').load();
 require('./app/config/passport')(passport);
